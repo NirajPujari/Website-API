@@ -8,7 +8,7 @@ import cookiesParser from 'cookie-parser';
 import api from './api';
 import Database from './db';
 import * as middleware from './middleware';
-import { MessageResponse } from './interfaces';
+import { MessageRequest, MessageResponse } from './interfaces';
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.use(cookiesParser());
 app.use(express.json());
 
 // Base route
-app.get<{}, MessageResponse>('/', (req, res) => {
+app.get<MessageRequest, MessageResponse>('/', (req, res) => {
   res.json({ message: 'Got a Fetch request' });
 });
 

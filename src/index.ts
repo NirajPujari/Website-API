@@ -1,8 +1,7 @@
 import app from './app';
-import Database from './db';
 
-const port = process.env.PORT || 5000;
-
+// import Database from './db';
+// const port = process.env.PORT || 5000;
 // (async () => {
 //   try {
 //     const database = Database.getInstance();

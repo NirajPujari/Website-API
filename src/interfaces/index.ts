@@ -1,3 +1,3 @@
-export * from './MessageResponse'
+export * from './Message'
 export * from './ErrorResponse'
 export * from './Mongo'
