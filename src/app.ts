@@ -1,4 +1,4 @@
-import cors from 'cors';
+import cors, { CorsOptions } from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import express from 'express';
@@ -19,10 +19,27 @@ app.use((req, res, next) => {
   next();
 });
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://powerhousefitness.vercel.app',
+];
+
+const corsOptions: CorsOptions = {
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    // Allow requests with no origin (like mobile apps, curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+
 // Configuration for API
 app.use(morgan('dev'));
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(compression());
 app.use(cookiesParser());
 app.use(express.json());
