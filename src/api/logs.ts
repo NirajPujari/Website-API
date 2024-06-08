@@ -3,17 +3,10 @@ import { LogGetRequest, LogGetResponse, LogPostRequest, LogPostResponse } from '
 
 const router = express.Router();
 
-// Middleware to check database connection
-router.use((req, res, next) => {
-  if (!req.db) {
-    return res.status(500).json({ error: 'Database not connected' });
-  }
-  next();
-});
-// GET route to fetch logs
+// GET route to fetch Logs
 router.get<LogGetRequest, LogGetResponse>('/', async (req, res) => {
   try {
-    const collection = req.db.collection('logs');
+    const collection = req.db.collection('Logs');
     const result = await collection.find({}).toArray();
     res.json(result);
   } catch (error) {
@@ -22,7 +15,7 @@ router.get<LogGetRequest, LogGetResponse>('/', async (req, res) => {
   }
 });
 
-// POST route to insert a log
+// POST route to insert a Log
 router.post<LogPostRequest, LogPostResponse>('/', async (req, res) => {
   try {
     const { ip, date, route } = req.body;
@@ -32,7 +25,7 @@ router.post<LogPostRequest, LogPostResponse>('/', async (req, res) => {
       return res.status(400).json('Bad Request: Missing required fields');
     }
 
-    const collection = req.db.collection('logs');
+    const collection = req.db.collection('Logs');
     const result = await collection.insertOne({ ip, date: new Date(date), route });
     res.json(result);
   } catch (error) {
